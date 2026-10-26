@@ -60,14 +60,14 @@ spring.datasource.password=${DB_PASSWORD}
 server.port=8081
 ```
 
-Set your local PostgreSQL credentials in Windows PowerShell before starting the application:
+Set your PostgreSQL credentials in Windows PowerShell before starting the application:
 
 ```powershell
 $env:DB_USERNAME = "your_postgres_username"
 $env:DB_PASSWORD = "your_postgres_password"
 ```
 
-Replace the example values with your own PostgreSQL credentials. Never commit real passwords or other secrets to a public repository.
+Replace the example values with your actual PostgreSQL credentials. Never commit real passwords or other secrets to a public repository.
 
 ### 5. Start the API
 
@@ -83,7 +83,7 @@ Use Bruno to send requests to the API endpoints and verify their responses.
 
 ## Postman Collection
 
-The required Postman collection will be exported to the project root with the following filename:
+Export the required Postman collection to the project root with this filename:
 
 `electronic-device-repair-management-system-midterm.postman_collection.json`
 
@@ -93,6 +93,4 @@ The required Postman collection will be exported to the project root with the fo
 
 Student ID: 27004
 
-Adventist University of Central Africa (AUCA)
-Student ID: 27004  
 Adventist University of Central Africa (AUCA)
