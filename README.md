@@ -15,7 +15,7 @@ The Electronic Device Repair Management System Backend is a REST API developed u
 - Spring Data JPA
 - PostgreSQL
 - Maven
-- Postman
+- Bruno
 
 ## Prerequisites
 - Java 21
