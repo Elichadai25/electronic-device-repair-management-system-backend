@@ -42,8 +42,27 @@ Create a PostgreSQL database named `electronic_device_repair_db`.
 CREATE DATABASE electronic_device_repair_db;
 ```
 
-### 4. Configure the database
-Configure the PostgreSQL URL, username, and password in `src/main/resources/application.properties`. Use your own local database credentials. Do not commit real passwords to the public repository.
+### 4. Configure the Database
+
+Open `src/main/resources/application.properties` and ensure the database configuration is set as follows:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/electronic_device_repair_db
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+server.port=8081
+```
+
+Create the PostgreSQL database named `electronic_device_repair_db` and configure your local database credentials using environment variables.
+
+On Windows PowerShell, set the environment variables before running the application:
+
+```powershell
+$env:DB_USERNAME = "your_postgres_username"
+$env:DB_PASSWORD = "your_postgres_password"
+```
+
+Replace the example values with your actual PostgreSQL credentials. Never commit real passwords or other secrets to the public GitHub repository.
 
 ### 5. Start the API
 ```bash
