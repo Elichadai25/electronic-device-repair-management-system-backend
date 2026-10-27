@@ -12,5 +12,6 @@ public interface TechnicianRepository extends JpaRepository<Technician, UUID> {
     @Query("SELECT DISTINCT t FROM Technician t JOIN t.deviceTypes d " +
             "WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Technician> findByDeviceTypeName(@Param("name") String name);
-    
+
+    boolean existsByWorkbench_BenchNumber(int benchNumber);
 }

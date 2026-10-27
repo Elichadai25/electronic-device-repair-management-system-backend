@@ -2,12 +2,15 @@ package auca.example.electronic_device_repair_management_syste.repository;
 
 import java.util.UUID;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import auca.example.electronic_device_repair_management_syste.model.Workbench;
 
 public interface WorkbenchRepository extends JpaRepository<Workbench, UUID> {
+
+    Optional<Workbench> findByBenchNumber(int benchNumber);
 
     @Query("SELECT w FROM Workbench w " +
             "WHERE NOT EXISTS (" +

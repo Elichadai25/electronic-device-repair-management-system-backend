@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -80,5 +81,42 @@ public class TechnicianController {
 
         return ResponseEntity.ok(
                 technicianService.findByDeviceTypeName(name));
+    }
+
+    @PutMapping("/{technicianId}/device-types/{deviceTypeId}")
+    public ResponseEntity<String> addDeviceType(
+            @PathVariable UUID technicianId,
+            @PathVariable UUID deviceTypeId) {
+
+        String result = technicianService.addDeviceType(technicianId, deviceTypeId);
+
+        if (result.equals("The technician with that id does not exist")
+                || result.equals("That device type does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+
+        if (result.equals("The technician already has that device type")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping("/{technicianId}/workbench")
+    public ResponseEntity<String> changeWorkbench(
+            @PathVariable UUID technicianId,
+            @RequestParam int benchNumber) {
+
+        String result = technicianService.changeWorkbench(technicianId, benchNumber);
+
+        if (result.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+
+        if (result.equals("That workbench is taken by another technician")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+
+        return ResponseEntity.ok(result);
     }
 }

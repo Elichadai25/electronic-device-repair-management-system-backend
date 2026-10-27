@@ -102,4 +102,55 @@ public class TechnicianService {
     public List<Technician> findByDeviceTypeName(String name) {
         return technicianRepository.findByDeviceTypeName(name);
     }
+
+    public String addDeviceType(UUID technicianId, UUID deviceTypeId) {
+        Optional<Technician> existingTechnician = technicianRepository.findById(technicianId);
+
+        if (existingTechnician.isEmpty()) {
+            return "The technician with that id does not exist";
+        }
+
+        Optional<DeviceType> existingDeviceType = deviceTypeRepository.findById(deviceTypeId);
+
+        if (existingDeviceType.isEmpty()) {
+            return "That device type does not exist";
+        }
+
+        Technician technician = existingTechnician.get();
+        DeviceType deviceType = existingDeviceType.get();
+
+        if (technician.getDeviceTypes().stream()
+                .anyMatch(d -> d.getId().equals(deviceTypeId))) {
+            return "The technician already has that device type";
+        }
+
+        technician.getDeviceTypes().add(deviceType);
+        technicianRepository.save(technician);
+
+        return "Device type added to the technician";
+    }
+
+    public String changeWorkbench(UUID technicianId, int benchNumber) {
+        Optional<Technician> existingTechnician = technicianRepository.findById(technicianId);
+
+        if (existingTechnician.isEmpty()) {
+            return "The technician with that id does not exist";
+        }
+
+        Optional<Workbench> existingWorkbench = workbenchRepository.findByBenchNumber(benchNumber);
+
+        if (existingWorkbench.isEmpty()) {
+            return "The workbench with that benchNumber does not exist";
+        }
+
+        if (technicianRepository.existsByWorkbench_BenchNumber(benchNumber)) {
+            return "That workbench is taken by another technician";
+        }
+
+        Technician technician = existingTechnician.get();
+        technician.setWorkbench(existingWorkbench.get());
+        technicianRepository.save(technician);
+
+        return "Workbench changed successfully";
+    }
 }
