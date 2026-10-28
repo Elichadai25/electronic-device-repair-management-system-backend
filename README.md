@@ -93,7 +93,7 @@ Export the required Postman collection to the project root with this filename:
 
 Student ID: 27004
 
-<<<<<<< HEAD
+ HEAD
 Adventist University of Central Africa (AUCA)
 =======
 Adventist University of Central Africa (AUCA)
