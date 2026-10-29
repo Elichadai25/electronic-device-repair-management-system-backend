@@ -128,7 +128,6 @@ public class RepairOrderService {
 
         return "Repair order deleted successfully";
     }
-    
 
     public List<RepairOrder> findByStatus(RepairStatus status) {
         return repairOrderRepository.findByStatusOrderByReceivedDateAsc(status);
@@ -139,5 +138,17 @@ public class RepairOrderService {
         return repairOrderRepository
                 .findByReceivedDateBetween(start, end);
     }
-    
+
+    public List<Object[]> countRepairOrdersByStatus() {
+        return repairOrderRepository.countRepairOrdersByStatus();
+    }
+
+    public String cancelRepairOrdersByTechnicianAndDate(
+            UUID technicianId, LocalDate date) {
+
+        int updatedCount = repairOrderRepository
+                .cancelRepairOrdersByTechnicianAndDate(technicianId, date);
+
+        return updatedCount + " repair orders cancelled";
+    }
 }

@@ -5,6 +5,8 @@ import auca.example.electronic_device_repair_management_syste.model.RepairStatus
 import java.util.List;
 import java.util.UUID;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import auca.example.electronic_device_repair_management_syste.model.RepairOrder;
 import auca.example.electronic_device_repair_management_syste.service.RepairOrderService;
 
@@ -124,5 +125,22 @@ public class RepairOrderController {
         LocalDate endDate = LocalDate.parse(end);
         return ResponseEntity.ok(
                 repairOrderService.findBetweenDates(startDate, endDate));
+    }
+
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> getRepairOrderStatsByStatus() {
+        return ResponseEntity.ok(
+                repairOrderService.countRepairOrdersByStatus());
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelRepairOrdersByTechnicianAndDate(
+            @RequestParam UUID technicianId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        String result = repairOrderService
+                .cancelRepairOrdersByTechnicianAndDate(technicianId, date);
+
+        return ResponseEntity.ok(result);
     }
 }
