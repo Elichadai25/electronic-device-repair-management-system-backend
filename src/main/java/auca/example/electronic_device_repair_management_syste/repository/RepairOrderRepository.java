@@ -12,30 +12,35 @@ import auca.example.electronic_device_repair_management_syste.model.RepairOrder;
 import auca.example.electronic_device_repair_management_syste.model.RepairStatus;
 
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, UUID> {
-        List<RepairOrder> findByStatusOrderByReceivedDateAsc(RepairStatus status);
+  List<RepairOrder> findByStatusOrderByReceivedDateAsc(RepairStatus status);
 
-        List<RepairOrder> findByReceivedDateBetween(
-                        LocalDate start, LocalDate end);
+  List<RepairOrder> findByReceivedDateBetween(
+      LocalDate start, LocalDate end);
 
-        boolean existsByTechnician_IdAndReceivedDateAndStatusNot(
-                        UUID technicianId,
-                        LocalDate receivedDate,
-                        RepairStatus status);
+  boolean existsByTechnician_IdAndReceivedDateAndStatusNot(
+      UUID technicianId,
+      LocalDate receivedDate,
+      RepairStatus status);
 
-        @Query("SELECT r.status, COUNT(r) FROM RepairOrder r GROUP BY r.status")
-        List<Object[]> countRepairOrdersByStatus();
+  // dashboard methods
+  long countByReceivedDate(LocalDate receivedDate);
 
-        @Modifying
-        @Transactional
-        @Query("""
-                        UPDATE RepairOrder r
-                        SET r.status = auca.example.electronic_device_repair_management_syste.model.RepairStatus.DECLINED
-                        WHERE r.technician.id = :technicianId
-                          AND r.receivedDate = :date
-                          AND r.status <> auca.example.electronic_device_repair_management_syste.model.RepairStatus.FIXED
-                        """)
-        int cancelRepairOrdersByTechnicianAndDate(
-                        @Param("technicianId") UUID technicianId,
-                        @Param("date") LocalDate date);
-                        
+  long countByStatus(RepairStatus status);
+
+  @Query("SELECT r.status, COUNT(r) FROM RepairOrder r GROUP BY r.status")
+  List<Object[]> countRepairOrdersByStatus();
+
+  @Modifying
+  @Transactional
+  @Query("""
+      UPDATE RepairOrder r
+      SET r.status = auca.example.electronic_device_repair_management_syste.model.RepairStatus.DECLINED
+      WHERE r.technician.id = :technicianId
+        AND r.receivedDate = :date
+        AND r.status <> auca.example.electronic_device_repair_management_syste.model.RepairStatus.FIXED
+      """)
+  int cancelRepairOrdersByTechnicianAndDate(
+      @Param("technicianId") UUID technicianId,
+      @Param("date") LocalDate date);
+
 }

@@ -6,7 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import auca.example.electronic_device_repair_management_syste.model.RepairOrder;
 import auca.example.electronic_device_repair_management_syste.model.RepairStatus;
 import auca.example.electronic_device_repair_management_syste.repository.RepairOrderRepository;
@@ -47,10 +48,6 @@ public class RepairOrderService {
         repairOrderRepository.save(repairOrder);
 
         return "Repair order saved successfully";
-    }
-
-    public List<RepairOrder> findAll() {
-        return repairOrderRepository.findAll();
     }
 
     public Optional<RepairOrder> findById(UUID id) {
@@ -150,5 +147,13 @@ public class RepairOrderService {
                 .cancelRepairOrdersByTechnicianAndDate(technicianId, date);
 
         return updatedCount + " repair orders cancelled";
+    }
+
+    public List<RepairOrder> findAll() {
+        return repairOrderRepository.findAll();
+    }
+
+    public Page<RepairOrder> findAll(Pageable pageable) {
+        return repairOrderRepository.findAll(pageable);
     }
 }
