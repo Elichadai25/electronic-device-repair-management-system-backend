@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "ElectronicDevicesRepairManagementSystem",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Customer",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/customers/by-last-name?lastName=hakizimana",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "customers",
+            "by-last-name"
+          ],
+          "query": [
+            {
+              "key": "lastName",
+              "value": "hakizimana"
+            }
+          ],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "repair_order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/repair-orders/save",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "repair-orders",
+            "save"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"receivedDate\": \"2026-10-20\",\n  \"deviceModel\": \"Samsung Galaxy S24\",\n  \"faultDescription\": \"Broken screen\",\n  \"status\": \"FIXED\",\n  \"customer\": {\n    \"id\": \"0d9678cd-aec9-44c8-ad9e-c6c629693281\"\n  },\n  \"technician\": {\n    \"id\": \"efc352b4-a5f9-4a70-9158-a2e28785351b\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "device_type",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/device-types/all",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "device-types",
+            "all"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "Technician",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/technicians/by-device-type?name=lap",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "technicians",
+            "by-device-type"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "lap"
+            }
+          ],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "work_bench",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/workbenches/free",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "workbenches",
+            "free"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "spare-part",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/spare-parts/save?repairOrderId=8a6c7afe-3e7d-427a-9169-abe2772ea58f",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "spare-parts",
+            "save"
+          ],
+          "query": [
+            {
+              "key": "repairOrderId",
+              "value": "8a6c7afe-3e7d-427a-9169-abe2772ea58f"
+            }
+          ],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"partName\": \"Screen assembly\",\n  \"note\": \"Original part, 3 month warranty\",\n  \"unitCost\": 65000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "http://localhost:8081/api/dashboard/summary",
+          "protocol": "http",
+          "host": [
+            "localhost:8081"
+          ],
+          "path": [
+            "api",
+            "dashboard",
+            "summary"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    }
+  ],
+  "variable": []
+}
