@@ -28,12 +28,14 @@ public class SparePartController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<SparePart> saveSparePart(
+    public ResponseEntity<String> saveSparePart(
             @RequestBody SparePart sparePart,
             @RequestParam UUID repairOrderId) {
 
-        SparePart saved = sparePartService.saveSparePart(sparePart, repairOrderId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        sparePartService.saveSparePart(sparePart, repairOrderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Spare part saved successfully");
     }
 
     @GetMapping

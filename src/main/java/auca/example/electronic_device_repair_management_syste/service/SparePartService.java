@@ -27,12 +27,13 @@ public class SparePartService {
     public SparePart saveSparePart(SparePart sparePart, UUID repairOrderId) {
         RepairOrder repairOrder = repairOrderRepository.findById(repairOrderId)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Repair order not found"));
+                        HttpStatus.NOT_FOUND,
+                        "The repair order with that id does not exist"));
 
         if (repairOrder.getStatus() != RepairStatus.FIXED) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Spare parts can only be added to fixed repair orders");
+                    "Spare parts are only for FIXED repair orders");
         }
 
         sparePart.setRepairOrder(repairOrder);
