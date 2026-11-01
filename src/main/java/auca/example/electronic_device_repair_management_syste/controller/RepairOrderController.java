@@ -108,6 +108,10 @@ public class RepairOrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
 
+        if (result.equals("That repair order has spare parts, delete them first")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+
         return ResponseEntity.ok(result);
     }
 

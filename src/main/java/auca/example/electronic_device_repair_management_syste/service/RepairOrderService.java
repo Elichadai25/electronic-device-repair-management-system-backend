@@ -11,13 +11,16 @@ import org.springframework.data.domain.Pageable;
 import auca.example.electronic_device_repair_management_syste.model.RepairOrder;
 import auca.example.electronic_device_repair_management_syste.model.RepairStatus;
 import auca.example.electronic_device_repair_management_syste.repository.RepairOrderRepository;
+import auca.example.electronic_device_repair_management_syste.repository.SparePartRepository;
 
 @Service
 public class RepairOrderService {
     private final RepairOrderRepository repairOrderRepository;
+    private final SparePartRepository sparePartRepository;
 
-    public RepairOrderService(RepairOrderRepository repairOrderRepository) {
+    public RepairOrderService(RepairOrderRepository repairOrderRepository, SparePartRepository sparePartRepository) {
         this.repairOrderRepository = repairOrderRepository;
+        this.sparePartRepository = sparePartRepository;
     }
 
     public String save(RepairOrder repairOrder) {
@@ -119,6 +122,10 @@ public class RepairOrderService {
     public String delete(UUID id) {
         if (repairOrderRepository.findById(id).isEmpty()) {
             return "The repair order with that id does not exist";
+        }
+
+        if (sparePartRepository.existsByRepairOrder_Id(id)) {
+            return "That repair order has spare parts, delete them first";
         }
 
         repairOrderRepository.deleteById(id);
